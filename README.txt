@@ -1,4 +1,4 @@
-
+Padrão utilizado Abstract Factory
 1. Tentar identificar utilização do padrão nas APIs das linguagens de programação conhecidas;
 
 * Java - Biblioteca JDBC:
