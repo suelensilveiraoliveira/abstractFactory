@@ -22,7 +22,19 @@ b) Fracos
 * Duplicação de Código: Dependendo da implementação, pode haver algum código duplicado entre as classes concretas da fábrica. 
   Por exemplo, se várias fábricas compartilham a mesma lógica para criar um objeto específico, essa lógica pode precisar ser repetida em cada fábrica.
 
-3. Conclusões
+4. Tentar identificar refatorações dos projetos do grupo que poderiam aplicar o padrão
+
+* No código original jogadores.py, identificamos duas funcionalidades principais: listagem dos jogadores e agrupamento por país de origem.
+* No código jogadoresAbstractFactory.py, aplicamos o padrão Abstract Factory para encapsular a criação dos produtos relacionados a cada funcionalidade.
+Criamos a classe abstrata TransferenciaFactory com os métodos criar_listagem e criar_agrupamento.
+Implementamos as classes concretas de fábrica ListagemFactory e AgrupamentoFactory que herdam de TransferenciaFactory e retornam instâncias dos produtos concretos correspondentes.
+Criamos as classes concretas Listagem e Agrupamento que herdam da classe abstrata Transferencia e implementam o método executar.
+No código principal, selecionamos a fábrica correspondente com base na opção escolhida pelo usuário.
+Chamamos os métodos criar_listagem e criar_agrupamento para obter as instâncias dos produtos relacionados à funcionalidade selecionada.
+Se a instância retornada não for None, chamamos o método executar correspondente para exibir os resultados.
+Essas alterações permitem adicionar facilmente novas funcionalidades relacionadas às transferências de jogadores no futuro, sem modificar o código principal.
+
+5. Conclusões
 
 * O padrão Abstract Factory é uma ferramenta valiosa para criar famílias de objetos relacionados, fornecendo flexibilidade e abstração. Ele permite a troca fácil de famílias de objetos sem afetar o restante do sistema, promovendo a separação de responsabilidades. 
 * No entanto, seu uso pode aumentar a complexidade e resultar em duplicação de código. Avaliar cuidadosamente as necessidades do projeto é essencial para determinar se o padrão Abstract Factory é adequado, equilibrando os benefícios da flexibilidade com a simplicidade e o gerenciamento da complexidade.
