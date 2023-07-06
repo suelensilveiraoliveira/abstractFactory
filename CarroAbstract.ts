@@ -1,64 +1,78 @@
-class Moto {
-    nome:string;
-    cor:string;
-    constructor (n:string,c:string){
-        this.nome = n;
-        this.cor = c;
+// Classe abstrata que define a estrutura básica de um carro
+abstract class Carro {
+    nome: string;
+    cor: string;
+    constructor(n: string, c: string) {
+      this.nome = n;
+      this.cor = c;
     }
-    
-    buzina(){
-        console.log("biiiiii-biii!!")
+    // Método abstrato para a buzina, que será implementado nas subclasses
+    abstract buzina(): void;
+  }
+  
+  // Classe concreta que herda da classe Carro (Toyota)
+  class Toyota extends Carro {
+    ano: number;
+    constructor(n: string, c: string, a: number) {
+      super(n, c);
+      this.ano = a;
     }
-}
-
-class Honda extends Moto{
-    ano:number;
-    constructor (n:string,c:string,a:number){
-        super(n,c)
-        this.ano = a;
+    // Implementação da buzina específica para a Toyota
+    buzina() {
+      console.log("beeee!!");
     }
-
-    //metodo sobreescreve da classe extendida
-    buzina(){
-        console.log("beeee!!")
+  }
+  
+  // Classe concreta que herda da classe Carro (Ford)
+  class Ford extends Carro {
+    ano: number;
+    constructor(n: string, c: string, a: number) {
+      super(n, c);
+      this.ano = a;
     }
-}
-
-class Suzuki extends Moto{
-    ano:number;
-    constructor (n:string,c:string,a:number){
-        super(n,c)
-        this.ano = a;
+    // Implementação da buzina específica para a Ford
+    buzina() {
+      console.log("muuuu!!");
     }
-
-    //metodo sobreescreve da classe extendida
-    buzina(){
-        console.log("muuuu!!")
+  }
+  
+  // Interface que define a estrutura de uma fábrica de carros
+  interface CarroFactory {
+    criarCarro(nome: string, cor: string, ano: number): Carro;
+  }
+  
+  // Fábrica concreta que cria carros Toyota
+  class ToyotaFactory implements CarroFactory {
+    criarCarro(nome: string, cor: string, ano: number): Carro {
+      return new Toyota(nome, cor, ano);
     }
-}
-
-let m1 = new Honda ("CG 150","Prata",2022)
-
-console.log(m1.nome)
-console.log(m1.cor)
-console.log(m1.ano)
-console.log(m1.buzina())
-
-
-let m2 = new Suzuki ("Intruder","Azul",2020)
-
-console.log(m2.nome)
-console.log(m2.cor)
-console.log(m2.ano)
-console.log(m2.buzina())
-
-let m3 = new Moto ("Fazer", "Verde") //aqui a classe moto pode ser instanciada porque é uma classe concreta e não abastrata
-console.log(m3.nome)
-console.log (m3.cor)
-
-/*
-npm install -g typescript
-npm install -g ts-node
-
-ts-node Moto.ts
-*/
+  }
+  
+  // Fábrica concreta que cria carros Ford
+  class FordFactory implements CarroFactory {
+    criarCarro(nome: string, cor: string, ano: number): Carro {
+      return new Ford(nome, cor, ano);
+    }
+  }
+  
+  // Função que cria um carro usando uma fábrica específica
+  function criarCarro(factory: CarroFactory, nome: string, cor: string, ano: number): Carro {
+    return factory.criarCarro(nome, cor, ano);
+  }
+  
+  // Criação das fábricas específicas
+  const toyotaFactory = new ToyotaFactory();
+  const fordFactory = new FordFactory();
+  
+  // Criação de um carro usando a fábrica ToyotaFactory
+  const c1 = criarCarro(toyotaFactory, "Corolla", "Prata", 2022);
+  console.log(c1.nome); // Corolla
+  console.log(c1.cor); // Prata
+  c1.buzina(); // beeee!!
+  
+  // Criação de um carro usando a fábrica FordFactory
+  const c2 = criarCarro(fordFactory, "New Fiesta", "Azul", 2020);
+  console.log(c2.nome); // New Fiesta
+  console.log(c2.cor); // Azul
+  c2.buzina(); // muuuu!!
+  
